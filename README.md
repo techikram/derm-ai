@@ -1,7 +1,7 @@
 
 # Application of Convolutional Neural Networks for Melanoma Classification
 
-**Author:** Ikram Ahdadouche  
+**Author:** Ikram Ahdadouche El Idrissi
 **Date:** September 2024
 
 ## Project Overview
