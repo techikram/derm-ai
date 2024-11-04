@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #001f3f;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .navbar {
+            background-color: #001f3f;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 1.2em;
+            padding: 10px 0;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .navbar .nav-link.active {
+            color: #00ffae; 
+        }
+        .card {
+            background-color: #CADBDF; 
+            border: 2px solid #007bff; 
+            border-radius: 10px;
+            color: black;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 800px;
+            box-shadow: 0 0 20px rgba(0, 119, 255, 0.8); 
+            text-align: justify;
+        }
+        h1, h2, h3 {
+            color: black;
+            text-align: left;
+        }
+        h1 {
+            text-shadow: none;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #1c1c1c;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 1px solid white;
+        }
+        .button:hover {
+            background-color: #333;
+            border-color: #ccc;
+        }
+        a {
+            color: #0077ff; 
+            text-decoration: none; 
+        }
+        a:hover {
+            text-decoration: underline; 
+        }
+        
+        .footer {
+            background-color: #001a33; 
+            color: white;
+            padding: 20px 50px;
+            width: 100%;
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            flex-direction: row; 
+            flex-shrink: 0;
+            position: relative;
+        }
+        .footer .footer-content {
+            display: flex;
+            align-items: center; 
+            margin-right: 50px; 
+        }
+        .footer .footer-content img {
+            max-width: 100px;
+            margin-right: 20px; 
+        }
+        .footer .contact-info {
+            text-align: left;
+        }
+        .footer .contact-info h5 {
+            margin: 0;
+            font-size: 1em; 
+        }
+        .footer .contact-info p {
+            margin: 0.2em 0; 
+        }
+        .footer .legal {
+            margin-top: 3%;
+            text-align: right;
+        }
+        .footer .legal p {
+            margin: 0.2em 0; 
+        }
+        .footer a {
+            color: #92D0DE; 
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 0.9em;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    {% load static %}
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'logo_udg_logo.png' %}" alt="Universitat de Girona" width="100">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'about' %}">About</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                </li>
+                
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <div class="card">
+        <h1>Terms of Service</h1>
+        <p>Welcome to IA@Dermato. These terms of service govern your use of our website and services. By accessing or using our website, you agree to comply with and be bound by these terms. Please read them carefully.</p>
+        
+        <h2>1. Acceptance of Terms</h2>
+        <p>By using this website, you agree to these terms of service. If you do not agree to these terms, you should not use the website.</p>
+
+        <h2>2. Changes to Terms</h2>
+        <p>We reserve the right to modify these terms at any time. Changes will be posted on this page, and it is your responsibility to review these terms regularly.</p>
+
+        <h2>3. User Responsibilities</h2>
+        <p>You agree to use our website and services only for lawful purposes and in accordance with these terms. You are responsible for any content you submit and its compliance with applicable laws.</p>
+
+        <h2>4. Intellectual Property</h2>
+        <p>All content and materials on this website are the property of IA@Dermato or its licensors and are protected by copyright and other intellectual property laws.</p>
+
+        <h2>5. Limitation of Liability</h2>
+        <p>We are not liable for any indirect, incidental, or consequential damages arising from your use of our website or services.</p>
+
+        <h2>6. Contact Us</h2>
+        <p>If you have any questions about these terms of service, please contact us at <a href="mailto:vicorob@eia.udg.edu" class="text-info">vicorob@eia.udg.edu</a>.</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <img src="{% static 'logo_vicorob.png' %}" alt="Vicorob Logo">
+            <div class="contact-info">
+                <h5>Computer Vision and Robotics</h5>
+                <p>Campus Montilivi, Edifici P4<br>
+                17003 Girona<br>
+                Tel: +34 972 41 89 05<br>
+                <a href="mailto:vicorob@eia.udg.edu" class="text-info">vicorob@eia.udg.edu</a></p>
+            </div>
+        </div>
+        <div class="legal">
+            <p>&copy; 2024 IA@Dermato. All rights reserved.</p>
+            <p>
+                <a href="{% url 'privacyPolicy' %}" class="text-info">Privacy Policy</a> | 
+                <a href="{% url 'termsOfService' %}" class="text-info">Terms of Service</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

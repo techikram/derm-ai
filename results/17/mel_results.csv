@@ -1,0 +1,2 @@
+filename,Benign,Suspicious,Malignant,Melanoma
+mel_23.png,0.74160236,0.0038425138,0.2545551,0.24256408

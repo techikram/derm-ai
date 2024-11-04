@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DERM AI | Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #001f3f;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: #001f3f;
+            z-index: 10;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 1.2em;
+            padding: 10px 0;
+            position: relative;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .navbar a.active {
+            border-bottom: 3px solid #00ffae;
+        }
+        .navbar a.active::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            width: 100%;
+            height: 3px;
+            background-color: #aeeeff;
+            transition: bottom 0.3s ease;
+        }
+        .navbar a:hover::after {
+            bottom: -3px;
+        }
+        .content {
+            flex: 1; 
+            text-align: left;
+            padding: 50px 20px 100px;
+            position: relative;
+            z-index: 5;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideInUp 1s forwards ease-out;
+        }
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .form-container {
+            max-width: 400px;
+            background-color: #CADBDF;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 119, 255, 0.8);
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+        .form-container h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5em;
+            color: white;
+            text-shadow: 0 0 30px #007bff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-container .ai {
+            color: #007bff;
+        }
+        .form-container label {
+            color: black;
+            font-weight: bold;
+        }
+        .form-container input[type="text"],
+        .form-container input[type="password"],
+        .form-container input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 20px 0;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            color: black;
+        }
+        .form-container .btn-primary {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+        }
+        .form-container .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #aeeeff;
+        }
+
+        /* Footer styles */
+        .footer {
+            background-color: #001a33; 
+            color: white;
+            padding: 20px 50px;
+            width: 100%;
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            flex-direction: row; 
+            flex-shrink: 0;
+            position: relative;
+        }
+        .footer .footer-content {
+            display: flex;
+            align-items: center; 
+            margin-right: 50px;
+        }
+        .footer .footer-content img {
+            max-width: 100px;
+            margin-right: 20px; 
+        }
+        .footer .contact-info {
+            text-align: left;
+        }
+        .footer .contact-info h5 {
+            margin: 0;
+            font-size: 1em; 
+        }
+        .footer .contact-info p {
+            margin: 0.2em 0; 
+        }
+        .footer .legal {
+            margin-top: 3%;
+            text-align: right;
+        }
+        .footer .legal p {
+            margin: 0.2em 0; 
+        }
+        .footer a {
+            color: #92D0DE; 
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 0.9em;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    {% load static %}
+    <div class="navbar">
+        <div class="logo">
+            <img src="{% static 'logo_udg_logo.png' %}" alt="Universitat de Girona" width="100">
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'register' %}" class="active">Register</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="form-container">
+            <h1>IA<span class="ai">@Dermato</span></h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                
+                <div class="form-field">
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
+                    <div class="helptext">{{ form.username.help_text }}</div>
+                    {% for error in form.username.errors %}
+                        <div class="error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-field">
+                    {{ form.first_name.label_tag }}
+                    {{ form.first_name }}
+                    <div class="helptext">{{ form.first_name.help_text }}</div>
+                    {% for error in form.first_name.errors %}
+                        <div class="error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-field">
+                    {{ form.last_name.label_tag }}
+                    {{ form.last_name }}
+                    <div class="helptext">{{ form.last_name.help_text }}</div>
+                    {% for error in form.last_name.errors %}
+                        <div class="error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-field">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                    <div class="helptext">{{ form.email.help_text }}</div>
+                    {% for error in form.email.errors %}
+                        <div class="error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-field">
+                    {{ form.password1.label_tag }}
+                    {{ form.password1 }}
+                    <div class="helptext">{{ form.password1.help_text }}</div>
+                    {% for error in form.password1.errors %}
+                        <div class="error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-field">
+                    {{ form.password2.label_tag }}
+                    {{ form.password2 }}
+                    <div class="helptext">{{ form.password2.help_text }}</div>
+                    {% for error in form.password2.errors %}
+                        <div class="error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" class="btn-primary">Register</button>
+            </form>
+            
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <img src="{% static 'logo_vicorob.png' %}" alt="Vicorob Logo">
+            <div class="contact-info">
+                <h5>Computer Vision and Robotics</h5>
+                <p>Campus Montilivi, Edifici P4<br>
+                17003 Girona<br>
+                Tel: +34 972 41 89 05<br>
+                <a href="mailto:vicorob@eia.udg.edu" class="text-info">vicorob@eia.udg.edu</a></p>
+            </div>
+        </div>
+        <div class="legal">
+            <p>&copy; 2024 IA@Dermato. All rights reserved.</p>
+            <p>
+                <a href="{% url 'privacyPolicy' %}" class="text-info">Privacy Policy</a> | 
+                <a href="{% url 'termsOfService' %}" class="text-info">Terms of Service</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

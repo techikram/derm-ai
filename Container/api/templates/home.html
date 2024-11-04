@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA@Dermato</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom Styles */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            font-family: 'Roboto', sans-serif;
+            background-color: #001f3f;
+            color: white;
+        }
+
+        .navbar {
+            background-color: #001f3f;
+        }
+
+        .navbar .navbar-nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .nav-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 10px;
+            font-size: 1.2em;
+            padding: 5px 5px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .navbar .nav-link.active {
+            color: #00ffae;
+        }
+
+        .navbar .nav-item.logout-btn {
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+        }
+
+        .navbar .nav-item.logout-btn .btn {
+            padding: 5px 5px;
+            font-size: 1.2em;
+            color: white;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .navbar .nav-item.logout-btn .btn:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            flex: 1;
+            padding: 50px 50px 100px;
+            text-align: left;
+        }
+
+        .content h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5em;
+            color: white;
+            text-shadow: 0 0 30px #00ffae;
+        }
+
+        .content p {
+            font-size: 2.0em;
+            margin: 20px 0;
+            white-space: pre-line;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            color: white;
+            background-color: transparent;
+            border: 2px solid white;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 30px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .robot-hand {
+            position: absolute;
+            top: 35%;
+            right: 5%;
+            transform: translateY(-50%);
+            width: 30vw;
+            z-index: 1;
+            pointer-events: none;
+            filter: drop-shadow(0 0 30px rgba(0, 128, 255, 0.8));
+            image-rendering: optimizeQuality;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+
+        @media (min-width: 1600px) {
+            .robot-hand {
+                left: 40%;
+                width: 1200px;
+            }
+        }
+
+        @media (max-width: 1400px) {
+            .robot-hand {
+                left: 40%;
+                width: 800px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .robot-hand {
+                left: 40%;
+                width: 650px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .robot-hand {
+                width: 500px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .robot-hand {
+                width: 400px;
+            }
+        }
+
+        /* Footer styles */
+        .footer {
+            background-color: #001a33;
+            color: white;
+            padding: 20px 50px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .footer .footer-content {
+            display: flex;
+            align-items: center;
+            margin-right: 50px;
+        }
+
+        .footer .footer-content img {
+            max-width: 100px;
+            margin-right: 20px;
+        }
+
+        .footer .contact-info {
+            text-align: left;
+        }
+
+        .footer .contact-info h5 {
+            margin: 0;
+            font-size: 1em;
+        }
+
+        .footer .contact-info p {
+            margin: 0.2em 0;
+        }
+
+        .footer .legal {
+            margin-top: 3%;
+            text-align: right;
+        }
+
+        .footer .legal p {
+            margin: 0.2em 0;
+        }
+
+        .footer a {
+            color: #92D0DE;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 0.9em;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    {% load static %}
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'logo_udg_logo.png' %}" alt="Universitat de Girona" width="100">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                {% if request.path != '/' %}
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">Home</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'upload' %}">Upload</a>
+                </li>
+                <li class="nav-item">
+                    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link" style="background: none; border: none; color: white; cursor: pointer; padding: 10; font-size: 1.2em;">Logout</button>
+                    </form>
+                </li>
+                
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="content">
+        <h1>IA<span class="ai" style="text-shadow: 0 0 30px #00ffae; color: #00ffae;">@Dermato</span></h1>
+        <p>Detect Skin Cancer Early with<br>our AI-Powered Tool</p>
+        <br>
+        <a href="{% url 'about' %}" class="btn">Read More</a>
+    </div>
+    <img src="{% static 'hand.svg' %}" alt="Robot Hand" class="robot-hand">
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <img src="{% static 'logo_vicorob.png' %}" alt="Vicorob Logo">
+            <div class="contact-info">
+                <h5>Computer Vision and Robotics</h5>
+                <p>Campus Montilivi, Edifici P4<br>
+                17003 Girona<br>
+                Tel: +34 972 41 89 05<br>
+                <a href="mailto:vicorob@eia.udg.edu" class="text-info">vicorob@eia.udg.edu</a></p>
+            </div>
+        </div>
+        <div class="legal">
+            <p>&copy; 2024 IA@Dermato. All rights reserved.</p>
+            <p>
+                <a href="{% url 'privacyPolicy' %}" class="text-info">Privacy Policy</a> | 
+                <a href="{% url 'termsOfService' %}" class="text-info">Terms of Service</a>
+            </p>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

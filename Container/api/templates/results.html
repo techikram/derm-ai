@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DERM AI - Results</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #001f3f;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: #001f3f;
+            z-index: 10;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 1.2em;
+            padding: 10px 0;
+            position: relative;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .navbar a.active {
+            border-bottom: 3px solid #00ffae;
+        }
+        .navbar a.active::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            width: 100%;
+            height: 3px;
+            background-color: #aeeeff;
+            transition: bottom 0.3s ease;
+        }
+        .navbar a:hover::after {
+            bottom: -3px;
+        }
+        .content {
+            flex: 1;
+            text-align: left;
+            padding: 50px 20px 100px;
+            position: relative;
+            z-index: 5;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideInUp 1s forwards ease-out;
+        }
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .container {
+            background-color: #CADBDF;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 119, 255, 0.8);
+            color: #001f3f;
+        }
+        table {
+            background-color: white;
+            color: #001f3f;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #001a33;
+            color: #00ffae;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        /* Footer styles */
+        .footer {
+            background-color: #001a33;
+            color: white;
+            padding: 20px 50px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            flex-shrink: 0;
+            position: relative;
+        }
+        .footer .footer-content {
+            display: flex;
+            align-items: center;
+            margin-right: 50px;
+        }
+        .footer .footer-content img {
+            max-width: 100px;
+            margin-right: 20px;
+        }
+        .footer .contact-info {
+            text-align: left;
+        }
+        .footer .contact-info h5 {
+            margin: 0;
+            font-size: 1em;
+        }
+        .footer .contact-info p {
+            margin: 0.2em 0;
+        }
+        .footer .legal {
+            margin-top: 3%;
+            text-align: right;
+        }
+        .footer .legal p {
+            margin: 0.2em 0;
+        }
+        .footer a {
+            color: #92D0DE;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 0.9em;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    {% load static %}
+    <div class="navbar">
+        <div class="logo">
+            <img src="{% static 'logo_udg_logo.png' %}" alt="Universitat de Girona" width="100">
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'upload' %}">Upload Image</a>
+            <a href="{% url 'profile' %}" class="active">Profile</a>
+            <li class="nav-item">
+                <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-link" style="background: none; border: none; color: white; cursor: pointer; padding: 10; font-size: 1.2em;">Logout</button>
+                </form>
+            </li>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="container">
+            <h1>Results</h1>
+            <p>The analysis has been completed successfully. Here are the results:</p>
+            
+            {% if results %}
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Filename</th>
+                        <th scope="col">Benign</th>
+                        <th scope="col">Suspicious</th>
+                        <th scope="col">Malignant</th>
+                        <th scope="col">Melanoma</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in results %}
+                    <tr>
+                        <td>{{ row.filename }}</td>
+                        <td>{{ row.Benign }}</td>
+                        <td>{{ row.Suspicious }}</td>
+                        <td>{{ row.Malignant }}</td>
+                        <td>{{ row.Melanoma }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No results found.</p>
+            {% endif %}
+
+            <a href="{% url 'home' %}" class="btn btn-outline-light">Return to Home</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <img src="{% static 'logo_vicorob.png' %}" alt="Vicorob Logo">
+            <div class="contact-info">
+                <h5>Computer Vision and Robotics</h5>
+                <p>Campus Montilivi, Edifici P4<br>
+                17003 Girona<br>
+                Tel: +34 972 41 89 05<br>
+                <a href="mailto:vicorob@eia.udg.edu" class="text-info">vicorob@eia.udg.edu</a></p>
+            </div>
+        </div>
+        <div class="legal">
+            <p>&copy; 2024 IA@Dermato. All rights reserved.</p>
+            <p>
+                <a href="{% url 'privacyPolicy' %}" class="text-info">Privacy Policy</a> | 
+                <a href="{% url 'termsOfService' %}" class="text-info">Terms of Service</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

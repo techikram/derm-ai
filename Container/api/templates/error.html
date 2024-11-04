@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - DERM AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #001f3f;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: #001f3f;
+            z-index: 10;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 1.2em;
+            padding: 10px 0;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .content {
+            flex: 1;
+            text-align: center;
+            padding: 50px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .error-container {
+            max-width: 600px;
+            background-color: #ff4d4d;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+            margin: 0 auto;
+        }
+        .error-container h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5em;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .error-container p {
+            font-size: 1.2em;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .error-container .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .error-container .btn:hover {
+            background-color: #0056b3;
+        }
+        .footer {
+            background-color: #001a33;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    {% load static %}
+    <div class="navbar">
+        <div class="logo">
+            <img src="{% static 'logo_udg_logo.png' %}" alt="Universitat de Girona" width="100">
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="error-container">
+            <h1>Error!</h1>
+            
+            <p>{{ error }}</p>  
+            <a href="{% url 'upload' %}" class="btn">Try Again</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 DERM AI. All rights reserved.</p>
+    </footer>
+</body>
+</html>

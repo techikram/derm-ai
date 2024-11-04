@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DERM AI - Success</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #001f3f;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: #001f3f;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 1.2em;
+            padding: 10px 0;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .navbar .nav-link.active {
+            color: #00ffae;
+        }
+
+        .container {
+            padding: 50px 15px;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3em;
+            color: #00ffae;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            color: white;
+            background-color: transparent;
+            border: 2px solid white;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 30px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #001a33;
+            color: #00ffae;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+      
+      .footer {
+            background-color: #001a33; 
+            color: white;
+            padding: 20px 50px;
+            width: 100%;
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            flex-direction: row; 
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .footer .footer-content {
+            display: flex;
+            align-items: center; 
+            margin-right: 50px; 
+        }
+
+        .footer .footer-content img {
+            max-width: 100px;
+            margin-right: 20px; 
+        }
+
+        .footer .contact-info {
+            text-align: left;
+        }
+
+        .footer .contact-info h5 {
+            margin: 0;
+            font-size: 1em; 
+        }
+
+        .footer .contact-info p {
+            margin: 0.2em 0; 
+        }
+
+        .footer .legal {
+            margin-top:3%;
+            text-align: right;
+        }
+
+        .footer .legal p {
+          
+            margin: 0.2em 0; 
+        }
+
+        .footer a {
+            color: #92D0DE; 
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 0.9em;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    {% load static %}
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'logo_udg_logo.png' %}" alt="Universitat de Girona" width="100">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'profile' %}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About</a>
+                </li>
+                
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Results</h1>
+        <p>The analysis has been completed successfully. Here are the results:</p>
+        
+        {% if results %}
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>Benign</th>
+                    <th>Suspicious</th>
+                    <th>Malignant</th>
+                    <th>Melanoma</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in results %}
+                <tr>
+                    <td>{{ row.filename }}</td>
+                    <td>{{ row.Benign }}</td>
+                    <td>{{ row.Suspicious }}</td>
+                    <td>{{ row.Malignant }}</td>
+                    <td>{{ row.Melanoma }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No results found.</p>
+        {% endif %}
+
+        <a href="{% url 'home' %}" class="btn">Return to Home</a>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <img src="{% static 'logo_vicorob.png' %}" alt="Vicorob Logo">
+            <div class="contact-info">
+                <h5>Computer Vision and Robotics</h5>
+                <p>Campus Montilivi, Edifici P4<br>
+                17003 Girona<br>
+                Tel: +34 972 41 89 05<br>
+                <a href="mailto:vicorob@eia.udg.edu" class="text-info">vicorob@eia.udg.edu</a></p>
+            </div>
+        </div>
+        <div class="legal">
+            <p>&copy; 2024 IA@Dermato. All rights reserved.</p>
+            <p>
+                <a href="{% url 'privacyPolicy' %}" class="text-info">Privacy Policy</a> | 
+                <a href="{% url 'termsOfService' %}" class="text-info">Terms of Service</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

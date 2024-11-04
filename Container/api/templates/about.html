@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About IA@Dermato</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #001f3f;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .navbar {
+            background-color: #001f3f;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 1.2em;
+            padding: 10px 0;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .navbar .nav-link.active {
+            color: #00ffae; 
+        }
+        .card {
+            background-color: #CADBDF; 
+            border: 2px solid #007bff; 
+            border-radius: 10px;
+            color: black;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 800px;
+            box-shadow: 0 0 20px rgba(0, 119, 255, 0.8); 
+            text-align: justify;
+        }
+        h1, h2, h3 {
+            color: black;
+            text-align: left;
+        }
+        h1 {
+            text-shadow: none;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #1c1c1c;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 1px solid white;
+        }
+        .button:hover {
+            background-color: #333;
+            border-color: #ccc;
+        }
+        a {
+            color: #0077ff; 
+            text-decoration: none; 
+        }
+        a:hover {
+            text-decoration: underline; 
+        }
+    
+        .footer {
+            background-color: #001a33;
+            color: white;
+            padding: 20px 50px;
+            width: 100%;
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+            flex-direction: row; 
+            flex-shrink: 0;
+            position: relative;
+        }
+        .footer .footer-content {
+            display: flex;
+            align-items: center; 
+            margin-right: 50px; 
+        }
+        .footer .footer-content img {
+            max-width: 100px;
+            margin-right: 20px; 
+        }
+        .footer .contact-info {
+            text-align: left;
+        }
+        .footer .contact-info h5 {
+            margin: 0;
+            font-size: 1em; 
+        }
+        .footer .contact-info p {
+            margin: 0.2em 0; 
+        }
+        .footer .legal {
+            margin-top: 3%;
+            text-align: right;
+        }
+        .footer .legal p {
+            margin: 0.2em 0; 
+        }
+        .footer a {
+            color: #92D0DE; 
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 0.9em;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    {% load static %}
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'logo_udg_logo.png' %}" alt="Universitat de Girona" width="100">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'about' %}">About</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'upload' %}">Upload</a>
+                </li>
+                <li class="nav-item">
+                    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link" style="background: none; border: none; color: white; cursor: pointer; padding: 10; font-size: 1.2em;">Logout</button>
+                    </form>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <div class="card">
+        <h1>Welcome to the official website of IA@Dermato</h1>
+        <p>Welcome to the official website of IA@Dermato created by the <a href="https://vicorob.udg.edu/" target="_blank">Computer Vision and Robotics Group (ViCOROB)</a> at the University of Girona. Our team is dedicated to advancing the frontiers of technology in the fields of computer vision, robotics, and medical imaging. One of our most groundbreaking projects is our automated melanoma detection and diagnosis system, designed to improve early detection and treatment of skin cancer through the power of artificial intelligence.</p>
+
+        <h2>Our Mission</h2>
+        <p>At ViCOROB, our mission is to harness the capabilities of computer vision and machine learning to develop innovative solutions that address real-world problems. We strive to create technology that enhances the quality of life and contributes to the well-being of society. Our melanoma detection system is a testament to this commitment, aimed at providing accessible and accurate diagnostic tools to medical professionals and patients alike.</p>
+
+        <h2>Our Technology</h2>
+        <p>Our melanoma detection and diagnosis system uses state-of-the-art computer vision algorithms and deep learning models to analyze camera images of skin lesions. Key features of our technology include:</p>
+        <ul>
+            <li><strong>High Accuracy</strong>: Our system is trained on a vast dataset of skin images, enabling it to accurately differentiate between benign and malignant lesions.</li>
+            <li><strong>User-Friendly Interface</strong>: Designed with the end-user in mind, our platform is intuitive and easy to use, allowing seamless integration into clinical workflows.</li>
+            <li><strong>Real-Time Analysis</strong>: The system provides rapid results, facilitating timely medical intervention and improving patient outcomes.</li>
+            <li><strong>Continuous Learning</strong>: Our model continually evolves by incorporating new data, ensuring that its diagnostic capabilities are always up-to-date with the latest medical research.</li>
+        </ul>
+
+        <h2>Our Team</h2>
+        <p>ViCOROB is comprised of a diverse group of experts in computer vision, robotics, and medical imaging. Our interdisciplinary team includes researchers, engineers, students, and medical professionals who work collaboratively to develop cutting-edge solutions. Together, we bring a wealth of knowledge and experience to the field of medical technology innovation.</p>
+
+        <h2>Research and Collaboration</h2>
+        <p>We believe in the power of collaboration and actively seek partnerships with academic institutions, healthcare providers, and industry leaders. Our research is supported by a network of collaborators who share our vision of leveraging technology to improve healthcare. Through these partnerships, we aim to further refine our melanoma detection system and explore new applications of our technology.</p>
+
+        <h2>Contact Us</h2>
+        <p>We invite you to learn more about our work and join us in our mission to revolutionize medical diagnostics through computer vision and robotics. For inquiries, collaborations, or more information about our melanoma detection system, please contact us at <a href="mailto:vicorob@eia.udg.edu" class="text-info">vicorob@eia.udg.edu</a> or visit our laboratory at the University of Girona.</p>
+
+        <p>Together, let's shape the future of healthcare with innovative technology and collaborative research.</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <img src="{% static 'logo_vicorob.png' %}" alt="Vicorob Logo">
+            <div class="contact-info">
+                <h5>Computer Vision and Robotics</h5>
+                <p>Campus Montilivi, Edifici P4<br>
+                17003 Girona<br>
+                Tel: +34 972 41 89 05<br>
+                <a href="mailto:vicorob@eia.udg.edu" class="text-info">vicorob@eia.udg.edu</a></p>
+            </div>
+        </div>
+        <div class="legal">
+            <p>&copy; 2024 IA@Dermato. All rights reserved.</p>
+            <p>
+                <a href="{% url 'privacyPolicy' %}" class="text-info">Privacy Policy</a> | 
+                <a href="{% url 'termsOfService' %}" class="text-info">Terms of Service</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

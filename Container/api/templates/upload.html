@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DERM AI | Upload Image</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #001f3f;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .navbar {
+            background-color: #001f3f;
+            padding: 20px 50px;
+        }
+        .navbar .navbar-nav {
+            display: flex;
+            align-items: center;
+        }
+        .navbar .nav-item {
+            display: flex;
+            align-items: center;
+        }
+        .navbar .nav-link {
+            color: white;
+            text-decoration: none;
+            margin-left: 10px;
+            font-size: 1.2em;
+            padding: 5px 10px;
+        }
+        .navbar .nav-link:hover {
+            text-decoration: underline;
+        }
+        .navbar .nav-link.active {
+            color: #00ffae;
+            border-bottom: 3px solid #00ffae;
+            padding-bottom: 7px;
+        }
+        .navbar .nav-item.logout-btn .nav-link {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 5px 10px;
+            font-size: 1.2em;
+        }
+        .navbar .nav-item.logout-btn .nav-link:hover {
+            text-decoration: underline;
+        }
+        .content {
+            flex: 1;
+            text-align: left;
+            padding: 50px 20px 100px;
+            position: relative;
+            z-index: 5;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideInUp 1s forwards ease-out;
+        }
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .form-container {
+            max-width: 600px;
+            background-color: #CADBDF;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 119, 255, 0.8);
+            margin: 0 auto;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .form-container h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5em;
+            color: white;
+            text-shadow: 0 0 30px #007bff;
+            margin-bottom: 20px;
+        }
+        .form-container .ai {
+            color: #007bff;
+        }
+        .form-container label {
+            color: black;
+            font-weight: bold;
+        }
+        .form-container input[type="text"],
+        .form-container input[type="password"],
+        .form-container input[type="email"],
+        .form-container input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 20px 0;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            color: black;
+        }
+        .form-container .btn-primary {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+        }
+        .form-container .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        /* Footer styles */
+        .footer {
+            background-color: #001a33; 
+            color: white;
+            padding: 20px 50px;
+            width: 100%;
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            flex-direction: row; 
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .footer .footer-content {
+            display: flex;
+            align-items: center; 
+            margin-right: 50px; 
+        }
+
+        .footer .footer-content img {
+            max-width: 100px;
+            margin-right: 20px; 
+        }
+
+        .footer .contact-info {
+            text-align: left;
+        }
+
+        .footer .contact-info h5 {
+            margin: 0;
+            font-size: 1em; 
+        }
+
+        .footer .contact-info p {
+            margin: 0.2em 0; 
+        }
+
+        .footer .legal {
+            margin-top:3%;
+            text-align: right;
+        }
+
+        .footer .legal p {
+            margin: 0.2em 0; 
+        }
+
+        .footer a {
+            color: #92D0DE;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 0.9em;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Contenedor de la animación de carga */
+        #cargar {
+            display: none; /* Oculta el spinner inicialmente */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7); /* Fondo oscuro semi-transparente */
+            color: white;
+            text-align: center;
+            z-index: 9999; /* Asegura que esté por encima de otros elementos */
+        }
+
+        .spinner {
+            width: 100px; /* Tamaño del spinner */
+            height: 100px; /* Tamaño del spinner */
+            border: 10px solid rgba(0, 255, 0, 0.3); /* Borde del spinner con color verde claro */
+            border-top-color: #00ffae; /* Color del borde superior del spinner */
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px; /* Espacio entre el spinner y el texto */
+        }
+
+        /* Spinner CSS */
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    {% load static %}
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'logo_udg_logo.png' %}" alt="Universitat de Girona" width="100">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/about/' %}active{% endif %}" href="{% url 'about' %}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/upload/' %}active{% endif %}" href="{% url 'upload' %}">Upload Image</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/profile/' %}active{% endif %}" href="{% url 'profile' %}">Profile</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item logout-btn">
+                    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link" style="background: none; border: none; color: white; cursor: pointer; padding: 5px 10px; font-size: 1.2em;">Logout</button>
+                    </form>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/login/' %}active{% endif %}" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/register/' %}active{% endif %}" href="{% url 'register' %}">Register</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="form-container">
+            <h1>Upload Image</h1>
+            <form method="post" enctype="multipart/form-data" action="{% url 'upload' %}" onsubmit="showLoading()">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn-primary">Upload</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Contenedor de la animación de carga -->
+    <div id="cargar">
+        <div class="spinner"></div>
+        <p>Processing your image. This might take a few seconds..</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <img src="{% static 'logo_vicorob.png' %}" alt="Vicorob Logo">
+            <div class="contact-info">
+                <h5>Computer Vision and Robotics</h5>
+                <p>Campus Montilivi, Edifici P4<br>
+                17003 Girona<br>
+                Tel: +34 972 41 89 05<br>
+                <a href="mailto:vicorob@eia.udg.edu" class="text-info">vicorob@eia.udg.edu</a></p>
+            </div>
+        </div>
+        <div class="legal">
+            <p>&copy; 2024 IA@Dermato. All rights reserved.</p>
+            <p>
+                <a href="{% url 'privacyPolicy' %}" class="text-info">Privacy Policy</a> | 
+                <a href="{% url 'termsOfService' %}" class="text-info">Terms of Service</a>
+            </p>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function showLoading() {
+            document.getElementById('cargar').style.display = 'flex'; // Cambia el display a 'flex' para mostrar el spinner
+        }
+    </script>
+    
+</body>
+</html>

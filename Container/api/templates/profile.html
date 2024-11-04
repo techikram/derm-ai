@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DERM AI | Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #001f3f;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: #001f3f;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 1.2em;
+            padding: 10px 0;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .navbar .nav-link.active {
+            color: #00ffae;
+        }
+
+        .container {
+            padding: 50px 15px;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3em;
+            color: #00ffae;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            color: white;
+            background-color: transparent;
+            border: 2px solid white;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+       
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border: 2px solid #ffffff; 
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #444; 
+        }
+
+        th {
+            background-color: #001a33;
+            color: #00ffae;
+        }
+
+        tr:hover {
+            background-color: #002a5c; 
+        }
+
+        .btn-custom {
+            margin-right: 5px;
+        }
+
+        .status-icon {
+            font-size: 1.2em;
+        }
+
+        .status-success {
+            color: green;
+        }
+
+        .status-error {
+            color: red;
+        }
+
+        .status-no-results {
+            color: orange;
+        }
+
+        
+        .footer {
+            background-color: #001a33; 
+            color: white;
+            padding: 20px 50px;
+            width: 100%;
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            flex-direction: row; 
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .footer .footer-content {
+            display: flex;
+            align-items: center; 
+            margin-right: 50px; 
+        }
+
+        .footer .footer-content img {
+            max-width: 100px;
+            margin-right: 20px; 
+        }
+
+        .footer .contact-info {
+            text-align: left;
+        }
+
+        .footer .contact-info h5 {
+            margin: 0;
+            font-size: 1em; 
+        }
+
+        .footer .contact-info p {
+            margin: 0.2em 0; 
+        }
+
+        .footer .legal {
+            margin-top: 3%;
+            text-align: right;
+        }
+
+        .footer .legal p {
+            margin: 0.2em 0; 
+        }
+
+        .footer a {
+            color: #92D0DE;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 0.9em;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    {% load static %}
+    {% load custom_filters %}
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'logo_udg_logo.png' %}" alt="Universitat de Girona" width="100">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'profile' %}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'upload' %}">Upload</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About</a>
+                </li>
+                <li class="nav-item">
+                    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link" style="background: none; border: none; color: white; cursor: pointer; padding: 10; font-size: 1.2em;">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Profile: {{ first_name }} {{ last_name }}</h1>
+        <p><strong>Username:</strong> {{ username }} </p>
+
+        
+        <div class="button-container">
+            <a href="{% url 'view_cumulative_results' %}" class="btn-custom btn btn-secondary">Results history</a>
+        </div>
+
+        <h2>Your Upload History</h2>
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>File Name</th>
+                    
+                    <th>Status</th>
+                    <th>Upload Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for upload in uploads %}
+                <tr>
+                    <td>{{ upload.name }}</td>
+                    <td>{{ upload.file_name }}</td>
+                   
+                    <td>
+                        {% if upload.status == 'success' %}
+                            <span class="status-icon status-success">&#10004; Success</span>
+                        {% elif upload.status == 'error' %}
+                            <span class="status-icon status-error">&#10008; Error</span>
+                        {% elif upload.status == 'no_results' %}
+                            <span class="status-icon status-no-results">&#10067; No Results</span>
+                        {% else %}
+                            <span class="status-icon">Unknown</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ upload.upload_date }}</td>
+                    <td>
+                        <a href="{% url 'view_results' upload.file_name|remove_extension %}" class="btn-custom btn btn-primary">See Results</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No uploads found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <img src="{% static 'logo_vicorob.png' %}" alt="Vicorob Logo">
+            <div class="contact-info">
+                <h5>Computer Vision and Robotics</h5>
+                <p>Campus Montilivi, Edifici P4<br>
+                17003 Girona<br>
+                Tel: +34 972 41 89 05<br>
+                <a href="mailto:vicorob@eia.udg.edu" class="text-info">vicorob@eia.udg.edu</a></p>
+            </div>
+        </div>
+        <div class="legal">
+            <p>&copy; 2024 IA@Dermato. All rights reserved.</p>
+            <p>
+                <a href="{% url 'privacyPolicy' %}" class="text-info">Privacy Policy</a> | 
+                <a href="{% url 'termsOfService' %}" class="text-info">Terms of Service</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
